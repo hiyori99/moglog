@@ -1,0 +1,45 @@
+{% extends 'mymapp/common.html' %}
+
+{% block content %}
+    <div class="m-3">
+        <h1 class="mb-4">Shop一覧</h1>
+        <a href="{% url 'mymapp:add_shop' %}" class="btn btn-success mb-3">新しいお店を追加する</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>名前</th>
+                    <th>場所</th>
+                    <th>行った回数</th>
+                    <th>評価</th>
+                    <th>詳細</th>
+                    <th>編集</th>
+                    <th>削除</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shop in shops %}
+                    <tr>
+                        <td>{{ shop.name }}</td>
+                        <!-- <td><a href="{{ shop.address }}">Google mapを見る</a></td> -->
+                        <td><a href="{{ shop.address }}" target="_blank" rel="noopener noreferrer">Googlemapを見る</a></td>
+                        <td>{{ shop.visit_count }}回</td>
+                        <td>{{ shop.rating }}</td>
+                        <td>
+                            <a href="{% url 'mymapp:shop_detail' shop.id %}" class="btn btn-primary">詳細</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'mymapp:edit_shop' shop.id %}" class="btn btn-primary">編集</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'mymapp:delete_shop' shop.id %}" class="btn btn-secondary" onclick='return confirm("本当に削除しますか？");'>削除</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7">お店がありません</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

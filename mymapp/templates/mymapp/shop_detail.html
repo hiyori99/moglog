@@ -1,0 +1,23 @@
+{% extends 'mymapp/common.html' %}
+
+{% block content %}
+    <div class="m-3">
+        <h1>{{ shop.name }}</h1>
+        <p>場所: <a href="{{ shop.address }}" target="_blank" rel="noopener noreferrer">Googlemapを見る</a></p>
+        <p>行った回数: {{ shop.visit_count }}回</p>
+        <p>評価: {{ shop.rating }}</p>
+        <a href="{% url 'mymapp:home' %}" class="btn btn-secondary mt-3">戻る</a>
+        <h2 class="mt-4">食べたもの</h2>
+        <a href="{% url 'mymapp:add_menu' shop_id=shop.id %}" class="btn btn-primary mb-3">メニューを追加する</a>
+        <ul class="list-group">
+            {% for menu in shop.menu_set.all %}
+                <li class="list-group-item">
+                    {{ menu.menu }} - {{ menu.price }}円
+                    <p class="mb-0">{{ menu.description }}</p>
+                </li>
+            {% empty %}
+                <li class="list-group-item">メニューがありません</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
